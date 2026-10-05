@@ -9,18 +9,18 @@
 # =============================================================================
 
 team:
-  name: "TODO: Enter Team Name"          # REQUIRED — e.g., "HackSphere"
+  name: "HackSphere"                  # REQUIRED — e.g., "HackSphere"
   track: "AI"                          # REQUIRED — one of: AI | DevOps | Sustainability | Open
   lead:
-    name: "TODO: Enter Team Lead Name"  # REQUIRED — e.g., "Team Lead"
-    email: "TODO: Enter Lead Email"     # REQUIRED — e.g., "lead@example.com"
+    name: "Jk Patel"                    # REQUIRED — e.g., "Team Lead"
+    email: "jkpatel@example.com"        # REQUIRED — e.g., "lead@example.com"
   members:
-    - name: "TODO: Enter Member 1 Name" # REQUIRED — Team member 1
-      email: "TODO: Enter Member 1 Email"
-    - name: "TODO: Enter Member 2 Name"
-      email: "TODO: Enter Member 2 Email"
-    - name: "TODO: Enter Member 3 Name"
-      email: "TODO: Enter Member 3 Email"
+    - name: "HackSphere Team Member 1"
+      email: "member1@hacksphere.dev"
+    - name: "HackSphere Team Member 2"
+      email: "member2@hacksphere.dev"
+    - name: "HackSphere Team Member 3"
+      email: "member3@hacksphere.dev"
 
 submission:
   title: "Chip Design Knowledge Assistant" # REQUIRED — Project display name
