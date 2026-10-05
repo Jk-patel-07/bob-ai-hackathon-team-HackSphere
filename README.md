@@ -107,28 +107,60 @@ graph TD
 
 ```
 .
-├── submission.yaml               # Hackathon submission metadata
-├── README.md                     # Root project documentation
-├── CONTRIBUTING.md               # Contribution guidelines
-├── src/                          # Application source code
-│   ├── backend/                  # FastAPI server, RAG engine, config, vector store
-│   ├── mcp_server/               # IBM Bob MCP STDIO integration server
-│   ├── frontend/                 # React 18 SPA UI (built into backend static)
-│   ├── demo_data/                # Synthetic semiconductor specifications
-│   ├── scripts/                  # Data seeding and setup scripts
-│   └── tests/                    # 81 pytest unit & integration tests
-├── docs/                         # Detailed architecture & technical docs
-│   ├── problem-statement.md      # Deep dive into semiconductor domain problem
-│   ├── solution-overview.md       # Solution capabilities and RAG design
-│   ├── architecture.md           # Component architecture & data flow diagrams
-│   └── setup-guide.md            # Detailed installation and deployment guide
-├── demo/                         # Demo assets & links
-│   ├── screenshots/              # High-resolution application screenshots
+├── .github/
+│   └── workflows/
+│       └── validate.yml          # Submission completeness & validation workflow
+├── demo/                         # Demo assets, screenshots & verification files
+│   ├── screenshots/              # Application UI screenshots
+│   │   ├── 01-home-dashboard.png
+│   │   ├── 02-grounded-query.png
+│   │   ├── 03-citation-result.png
+│   │   ├── 04-knowledge-base.png
+│   │   └── 05-documents.png
+│   ├── demo-script.md            # Video recording script & demo flow
 │   ├── demo-video-link.txt       # Video walkthrough URL
-│   └── live-demo-url.txt         # Live deployment status note
-└── presentation/                 # Hackathon slide deck
-    ├── slides.pdf                # PDF slide presentation
-    └── slides_content.md         # Slide content & speaker notes
+│   ├── live-demo-url.txt         # Live demo URL deployment status
+│   └── recording-checklist.md    # Pre-recording verification checklist
+├── docs/                         # Detailed architecture & technical docs
+│   ├── architecture.md           # Component architecture & data flow diagrams
+│   ├── problem-statement.md      # Semiconductor domain problem deep-dive
+│   ├── setup-guide.md            # Step-by-step installation & deployment guide
+│   ├── solution-overview.md       # Solution capabilities & RAG engine spec
+│   └── template-guide.md         # Document template standards
+├── presentation/                 # Hackathon slide deck
+│   ├── slides.pptx               # 8-slide presentation deck (PPTX)
+│   ├── slides-content.md         # Detailed markdown slides & text
+│   ├── speaker-notes.md          # Judge-facing presentation transcript & timing
+│   └── README.md                 # Slide deck index
+├── scripts/                      # Repository management scripts
+│   ├── build_presentation.py     # Presentation generation script
+│   └── make_15_commits.py        # Git commit structuring script
+├── src/                          # Application source code
+│   ├── .env.example              # Environment configuration template
+│   ├── pyproject.toml            # Dependencies & pytest configuration
+│   ├── requirements.txt          # Python package requirements
+│   ├── backend/                  # FastAPI server, RAG engine & vector store
+│   │   ├── config.py             # App configuration & provider loader
+│   │   ├── embeddings.py         # Gemini & watsonx vector embeddings layer
+│   │   ├── main.py               # FastAPI REST endpoints & static server
+│   │   ├── models.py             # Pydantic request & response schemas
+│   │   ├── rag_engine.py         # Grounding scoring & RAG retrieval engine
+│   │   └── vector_store.py       # ChromaDB persistent store wrapper
+│   ├── demo_data/                # Synthetic semiconductor specifications
+│   │   ├── synthetic_drc_standard_cells.md
+│   │   ├── synthetic_latchup_guidelines.md
+│   │   └── synthetic_pdk_design_rules.md
+│   ├── frontend/                 # React 18 SPA Frontend (Vite + Tailwind)
+│   ├── mcp_server/               # IBM Bob MCP STDIO integration server
+│   │   └── server.py             # MCP server implementation
+│   ├── scripts/                  # Backend data seeding & test scripts
+│   │   ├── seed_demo_data.py     # Seed ChromaDB with demo specs
+│   │   └── verify_e2e.py         # E2E pipeline verification script
+│   └── tests/                    # 81 pytest unit & integration tests
+├── .gitignore                    # Safety configuration (ignores secrets & Chroma DBs)
+├── CONTRIBUTING.md               # Hackathon contribution guidelines
+├── README.md                     # Main repository documentation
+└── submission.yaml               # Hackathon submission metadata
 ```
 
 ---
@@ -137,7 +169,7 @@ graph TD
 
 ### 1. Prerequisites
 - Python 3.11+
-- Node.js 18+ (for frontend build)
+- Node.js 18+ (for frontend development/builds)
 - Google Gemini API Key or IBM watsonx.ai credentials
 
 ### 2. Environment Configuration
@@ -236,7 +268,7 @@ npm run build
 
 ## 🖼️ Screenshots & Demo Evidence
 
-| View | Description | Screenshot |
+| View | Description | Screenshot Preview |
 |---|---|---|
 | **01. Home Dashboard** | Main query interface with AI provider status badge & category pills | [![Home](demo/screenshots/01-home-dashboard.png)](demo/screenshots/01-home-dashboard.png) |
 | **02. Grounded Query** | Technical query on metal pitch design rules returning exact answer | [![Query](demo/screenshots/02-grounded-query.png)](demo/screenshots/02-grounded-query.png) |
