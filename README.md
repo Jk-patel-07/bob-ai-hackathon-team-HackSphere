@@ -119,7 +119,6 @@ graph TD
 │   │   └── 05-documents.png
 │   ├── demo-script.md            # Video recording script & demo flow
 │   ├── demo-video-link.txt       # Video walkthrough URL
-│   ├── live-demo-url.txt         # Live demo URL deployment status
 │   └── recording-checklist.md    # Pre-recording verification checklist
 ├── docs/                         # Detailed architecture & technical docs
 │   ├── architecture.md           # Component architecture & data flow diagrams
@@ -266,7 +265,9 @@ npm run build
 
 ---
 
-## 🖼️ Screenshots & Demo Evidence
+## 📹 Demo & Screenshots
+
+> 🎬 **Watch Demo Video**: [Google Drive Demo Walkthrough](https://drive.google.com/open?id=15A4iSjQpDHft6BsC3vq8Ppx4ucGHTft2&usp=drive_fs)
 
 | View | Description | Screenshot Preview |
 |---|---|---|

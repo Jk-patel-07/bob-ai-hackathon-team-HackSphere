@@ -64,6 +64,6 @@ artifacts:
   setup_guide: "docs/setup-guide.md"
   architecture_doc: "docs/architecture.md"
   demo_video: "demo/demo-video-link.txt"   # URL to hosted video (YouTube, Loom, Box)
-  live_demo: "demo/live-demo-url.txt"      # URL to deployed demo (optional)
+  live_demo: ""                            # Optional field left empty
   screenshots: "demo/screenshots/"
   presentation: "presentation/"
