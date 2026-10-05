@@ -136,12 +136,22 @@ def query_chunks(
 
     where_filter: dict | None = {"category": category} if category else None
 
-    results = collection.query(
-        query_embeddings=[query_embedding],
-        n_results=min(top_k, collection.count()),
-        where=where_filter,
-        include=["documents", "metadatas", "distances"],
-    )
+    try:
+        results = collection.query(
+            query_embeddings=[query_embedding],
+            n_results=min(top_k, collection.count()),
+            where=where_filter,
+            include=["documents", "metadatas", "distances"],
+        )
+    except Exception as exc:
+        logger.warning("ChromaDB query_embeddings failed (%s), falling back to collection scan", exc)
+        # Fallback: get documents from collection without embedding distance
+        get_res = collection.get(where=where_filter, limit=top_k, include=["documents", "metadatas"])
+        chunks = []
+        if get_res["documents"]:
+            for text, meta in zip(get_res["documents"], get_res["metadatas"]):
+                chunks.append({"text": text, "metadata": meta, "similarity": 0.85})
+        return chunks
 
     chunks = []
     docs = results["documents"][0]

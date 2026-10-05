@@ -92,7 +92,7 @@ def ingest_document(
         if response.status_code == 200:
             result = response.json()
             if verbose:
-                print(f"  ✅  {result['doc_name']}")
+                print(f"  [OK]  {result['doc_name']}")
                 print(f"      Chunks stored: {result['chunks_created']}")
                 print(f"      Doc ID:        {result['doc_id']}")
             return True
@@ -102,15 +102,15 @@ def ingest_document(
                 detail = response.json().get("detail", response.text[:200])
             except Exception:
                 detail = response.text[:200]
-            print(f"  ❌  HTTP {response.status_code}: {detail}")
+            print(f"  [ERROR]  HTTP {response.status_code}: {detail}")
             return False
     except httpx.ConnectError:
-        print(f"\n❌ Cannot reach backend at {backend_url}")
+        print(f"\n[ERROR] Cannot reach backend at {backend_url}")
         print("   Please start the backend first:")
         print("   cd src && uvicorn backend.main:app --reload\n")
         return False
     except Exception as exc:
-        print(f"  ❌  Unexpected error: {exc}")
+        print(f"  [ERROR]  Unexpected error: {exc}")
         return False
 
 
@@ -120,11 +120,10 @@ def check_backend(client: httpx.Client, backend_url: str) -> bool:
         resp = client.get(f"{backend_url}/health", timeout=5.0)
         if resp.status_code == 200:
             data = resp.json()
-            if not data.get("watsonx_configured"):
-                print("\n⚠️  WARNING: watsonx.ai credentials are not configured.")
-                print("   Ingestion will fail because embeddings cannot be generated.")
-                print("   Set WATSONX_API_KEY and WATSONX_PROJECT_ID in src/.env\n")
-                return False
+            is_configured = data.get("gemini_configured") or data.get("watsonx_configured") or data.get("ai_provider_configured")
+            if not is_configured:
+                print("\n[WARNING] AI Provider credentials are not configured.")
+                print("   Set GEMINI_API_KEY or WATSONX_API_KEY in src/.env\n")
             return True
         return False
     except httpx.ConnectError:
@@ -140,14 +139,14 @@ def print_summary(client: httpx.Client, backend_url: str) -> None:
             cats = data.get("categories", [])
             total_docs = data.get("total_documents", 0)
             total_chunks = data.get("total_chunks", 0)
-            print(f"\n{'─'*60}")
+            print(f"\n{'-'*60}")
             print(f"Knowledge Base Summary")
-            print(f"{'─'*60}")
+            print(f"{'-'*60}")
             print(f"Total documents : {total_docs}")
             print(f"Total chunks    : {total_chunks}")
             if cats:
                 print(f"\n{'Category':<25} {'Docs':>6} {'Chunks':>8}")
-                print(f"{'─'*25} {'─'*6} {'─'*8}")
+                print(f"{'-'*25} {'-'*6} {'-'*8}")
                 for cat in cats:
                     print(f"{cat['name']:<25} {cat['doc_count']:>6} {cat['chunk_count']:>8}")
     except Exception as exc:
@@ -174,21 +173,20 @@ def main() -> int:
     verbose = not args.quiet
 
     print("=" * 60)
-    print("Chip Design Knowledge Assistant — Demo Data Seeder")
+    print("Chip Design Knowledge Assistant - Demo Data Seeder")
     print("=" * 60)
     print(f"\nBackend URL: {backend_url}")
     print(f"Documents  : {len(DEMO_DOCUMENTS)}")
-    print("\nChecking backend health…")
+    print("\nChecking backend health...")
 
     with httpx.Client() as client:
         if not check_backend(client, backend_url):
-            print(f"\n❌ Backend not reachable or not ready at {backend_url}")
+            print(f"\n[ERROR] Backend not reachable or not ready at {backend_url}")
             print("   Start the backend with: cd src && uvicorn backend.main:app --reload")
             return 1
 
-        print("✅ Backend is healthy and watsonx.ai is configured.\n")
-        print(f"Starting ingestion of {len(DEMO_DOCUMENTS)} documents…")
-        print("(This may take 1–3 minutes per document due to embedding API calls)\n")
+        print("[OK] Backend is healthy.\n")
+        print(f"Starting ingestion of {len(DEMO_DOCUMENTS)} documents...")
 
         successes = 0
         failures = 0
@@ -203,19 +201,19 @@ def main() -> int:
                 failures += 1
 
         elapsed = time.time() - start_time
-        print(f"\n{'─'*60}")
+        print(f"\n{'-'*60}")
         print(f"Ingestion complete in {elapsed:.1f}s")
-        print(f"  ✅ Succeeded: {successes}")
+        print(f"  [OK] Succeeded: {successes}")
         if failures:
-            print(f"  ❌ Failed:    {failures}")
+            print(f"  [ERROR] Failed:    {failures}")
 
         print_summary(client, backend_url)
 
     if failures > 0:
-        print(f"\n⚠️  {failures} document(s) failed to ingest. Check the output above for details.")
+        print(f"\n[WARNING] {failures} document(s) failed to ingest.")
         return 1
 
-    print(f"\n🎉 All {successes} documents ingested successfully!")
+    print(f"\n[SUCCESS] All {successes} documents ingested successfully!")
     print("   You can now query the knowledge base via:")
     print("   - IBM Bob IDE (chip-design-assistant mode + MCP)")
     print("   - API: POST http://localhost:8000/search")
