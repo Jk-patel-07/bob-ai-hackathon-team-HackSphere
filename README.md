@@ -19,7 +19,7 @@
 |---|---|
 | **Team Name** | **HackSphere** |
 | **Track** | **AI** |
-| **Team Lead** | Jk Patel (`jkpatel@example.com`) |
+| **Team Lead** | Jk Patel  |
 | **Repository** | [bob-ai-hackathon-team-HackSphere](https://github.com/Jk-patel-07/bob-ai-hackathon-team-HackSphere) |
 
 ---
