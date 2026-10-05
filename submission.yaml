@@ -9,51 +9,51 @@
 # =============================================================================
 
 team:
-  name: ""                             # REQUIRED — e.g., "Orion Squad"
-  track: ""                            # REQUIRED — one of: AI | DevOps | Sustainability | Open
+  name: "TODO: Enter Team Name"          # REQUIRED — e.g., "HackSphere"
+  track: "AI"                          # REQUIRED — one of: AI | DevOps | Sustainability | Open
   lead:
-    name: ""                           # REQUIRED — e.g., "Alice Chen"
-    email: ""                          # REQUIRED — e.g., "alice.chen@ibm.com"
+    name: "TODO: Enter Team Lead Name"  # REQUIRED — e.g., "Team Lead"
+    email: "TODO: Enter Lead Email"     # REQUIRED — e.g., "lead@example.com"
   members:
-    - name: ""                         # REQUIRED — Team member 1
-      email: ""
-    - name: ""                         # Add more members by copying the two lines above
-      email: ""
-    - name: ""
-      email: ""
+    - name: "TODO: Enter Member 1 Name" # REQUIRED — Team member 1
+      email: "TODO: Enter Member 1 Email"
+    - name: "TODO: Enter Member 2 Name"
+      email: "TODO: Enter Member 2 Email"
+    - name: "TODO: Enter Member 3 Name"
+      email: "TODO: Enter Member 3 Email"
 
 submission:
-  title: ""                            # REQUIRED — Project display name, e.g., "SmartOps Dashboard"
+  title: "Chip Design Knowledge Assistant" # REQUIRED — Project display name
 
   problem_statement: >                 # REQUIRED — 1-3 sentences. What problem? Who has it?
-    Replace this text with a concise description of the real-world problem
-    your project addresses and who experiences it.
+    Semiconductor engineers spend significant time navigating complex physical design rules,
+    standard cell guidelines, and DRC/latchup specifications scattered across multi-page manuals.
+    Context switching and missed specification details slow down design verification cycles.
 
   solution_summary: >                  # REQUIRED — 1-3 sentences. What did you build?
-    Replace this text with a clear description of your solution
-    and how it addresses the problem above.
+    We built a retrieval-augmented generation assistant for chip design knowledge using Google Gemini API / watsonx.ai,
+    FastAPI, ChromaDB, PyMuPDF, and an IBM Bob MCP server. The system is designed to minimize hallucinations
+    by grounding answers in retrieved documents and returning an explicit insufficient-information response when supporting evidence is unavailable.
 
   key_features:                        # REQUIRED — List 3 to 5 specific features you implemented
-    - ""                               # e.g., "Real-time pipeline anomaly detection using watsonx.ai"
-    - ""
-    - ""
-    - ""                               # optional 4th
-    - ""                               # optional 5th
+    - "Strict grounded Q&A with document chunk citation deduplication and low-confidence fallback"
+    - "Configurable AI provider layer supporting Google Gemini API (gemini-2.5-flash) and IBM watsonx.ai"
+    - "IBM Bob integration via standard Model Context Protocol (MCP) STDIO server tools"
+    - "Document & Knowledge Base management API (Upload, List, Delete, Filtering)"
+    - "Single-port SPA deployment with reactive status indicator and category filters"
 
   tech_stack:
-    languages: []                      # REQUIRED — e.g., ["Python", "TypeScript"]
-    frameworks: []                     # e.g., ["FastAPI", "React"]
-    ibm_technologies: []               # e.g., ["watsonx.ai", "IBM Bob", "IBM Cloud Functions"]
-    databases: []                      # e.g., ["PostgreSQL", "Redis"]
-    other: []                          # e.g., ["Docker", "GitHub Actions", "Slack API"]
+    languages: ["Python", "TypeScript", "HTML", "CSS"]
+    frameworks: ["FastAPI", "React", "Vite", "TailwindCSS"]
+    ibm_technologies: ["IBM Bob (MCP Protocol)", "watsonx.ai (Supported Alternative)"]
+    databases: ["ChromaDB"]
+    other: ["Google Gemini API (google-genai)", "PyMuPDF", "LangChain Text Splitters", "Pydantic", "pytest", "Uvicorn"]
 
-  what_we_are_most_proud_of: >         # Optional but recommended — guides judges to your best work
-    Replace with what aspect of the submission you consider strongest
-    and want judges to pay special attention to.
+  what_we_are_most_proud_of: >
+    The strict anti-hallucination grounding architecture and seamless dual interface — allowing engineers to query chip design specifications either via the web frontend or directly inside IBM Bob via Model Context Protocol (MCP) tools.
 
-  known_limitations: >                 # Optional but recommended — be honest about gaps
-    Replace with any known limitations, incomplete features,
-    or shortcuts taken due to time constraints.
+  known_limitations: >
+    This hackathon prototype / MVP relies on synthetic demo data rather than proprietary foundry PDK rules. Advanced authentication/RBAC and multi-user ACLs are scaffolded for local single-tenant execution.
 
 # =============================================================================
 # ARTIFACT LOCATIONS
