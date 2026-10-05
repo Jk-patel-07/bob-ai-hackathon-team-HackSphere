@@ -1,0 +1,36 @@
+
+# Chip Design Knowledge Assistant — Python dependencies
+# Python 3.11+ required
+
+# ── Web framework ──────────────────────────────────────────────────────────────
+fastapi>=0.111.0
+uvicorn[standard]>=0.30.0
+
+# ── watsonx.ai (IBM AI inference + embeddings) ─────────────────────────────────
+ibm-watsonx-ai>=1.1.0
+
+# ── Vector store (local, persistent, no extra infrastructure) ─────────────────
+chromadb>=0.5.0
+
+# ── Document parsing ───────────────────────────────────────────────────────────
+pymupdf>=1.24.0          # PDF parsing (fitz)
+
+# ── Text splitting ─────────────────────────────────────────────────────────────
+langchain-text-splitters>=0.2.0
+
+# ── MCP (Model Context Protocol) server ───────────────────────────────────────
+# Uses MCPServer + run_stdio_async (mcp SDK v2 API)
+mcp>=2.0.0
+
+# ── HTTP client (MCP server → FastAPI) ────────────────────────────────────────
+httpx>=0.27.0
+
+# ── Data validation ────────────────────────────────────────────────────────────
+pydantic>=2.7.0
+pydantic-settings>=2.3.0
+
+# ── Environment variables ──────────────────────────────────────────────────────
+python-dotenv>=1.0.0
+
+# ── Utilities ──────────────────────────────────────────────────────────────────
+python-multipart>=0.0.9  # FastAPI file uploads
